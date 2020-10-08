@@ -1,0 +1,46 @@
+//JAVA
+class Solution {
+    //"1 "(末尾有空格)这个样例过不了
+    public boolean ifLegal(String s){
+        int i=0; //追踪下标，随着检索的进行向后移动
+        if( s.charAt(i)=='+' || s.charAt(i)=='-' ) i++;
+        if( s.charAt(i)>='0' && s.charAt(i)<='9' ){
+            //有越界风险，所以需要加结束符
+            while( s.charAt(i)>='0' && s.charAt(i)<='9' ) i++;
+        }
+        else return false;
+        //整数部分判断完成，开始小数部分
+        if( s.charAt(i)!='\0' && s.charAt(i)!='.' ) return false;
+        else{
+            if( s.charAt(i)=='.' ){
+                i++;
+                if( s.charAt(i)>='0' && s.charAt(i)<='9' ){
+                    while( s.charAt(i)>='0' && s.charAt(i)<='9' ) i++;
+                }
+                else return false;
+            }
+        }
+        return true;
+    }
+
+    public boolean isNumber(String s) {
+        //指数部分可以带小数吗？按不可以处理
+        //分离底数和指数部分
+        if( s.indexOf('e')==-1 && s.indexOf('E')==-1 ){
+            //没有指数部分
+            return ifLegal(s+'\0');
+        }
+        else{
+            //分离底数和指数
+            int i=s.indexOf('e');
+            if( i==-1 ) i=s.indexOf('E');
+            String dishu=s.substring(0,i);
+            dishu=dishu+'\0';
+            String zhishu=s.substring(i+1,s.length());
+            zhishu=zhishu+'\0';
+            if( zhishu.indexOf('.')!=-1 ) return false; //指数部分不可以有小数
+            if( ifLegal(dishu) && ifLegal(zhishu) ) return true;
+        }
+        return false;
+    }
+}
