@@ -1,0 +1,19 @@
+//JAVA
+class Solution {
+    public double myPow(double x, int n) {
+        //快速幂
+        if( x==0 ) return 0;
+        long e=n; //当n等于最大负数的时候，直接转正数会超出int的范围
+        if( e<0 ){
+            x=1/x;
+            e=-e;
+        }
+        double res=1;
+        while( e>0 ){
+            if( (e&1)==1 ) res=x*res;
+            e=e>>>1;
+            x=x*x;
+        }
+        return res;
+    }
+}
