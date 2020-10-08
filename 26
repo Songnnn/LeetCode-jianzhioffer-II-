@@ -1,0 +1,41 @@
+//JAVA
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+class Solution {
+
+    public boolean compare(TreeNode A,TreeNode B){
+        if( A==null && B==null ) return true;
+        if( A.val==B.val ){
+            if( compare(A.left,B.left) && compare(A.right,B.right) ) return true;
+        }
+        return false;
+    }
+
+    public TreeNode traverse(TreeNode A,int val){
+        Queue<TreeNode> q=new LinkedList<TreeNode>();
+        q.offer(A);
+        while( q.peek()!=null ){
+            TreeNode x=q.poll();
+            //只比较数字想的太简单了，如果一棵树有多个结点的值相同呢？
+            if( x.val==val ) return x;
+            if( x.left!=null ) q.offer(x.left);
+            if( x.right!=null ) q.offer(x.right);
+        }
+        return null;
+    }
+
+    public boolean isSubStructure(TreeNode A, TreeNode B) {
+        //找到A中的相同结构，把它当成新树去和B比较
+        if( B==null ) return false;
+        TreeNode C=traverse(A,B.val);
+        if( C==null ) return false;
+        return compare(C,B);
+    }
+}
