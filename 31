@@ -1,0 +1,37 @@
+//C++
+class Solution {
+public:
+    //题解中的方法不错，比我的好
+
+    int getIndex(vector<int> s,int e){
+        for( int i=0 ; i<s.size() ; i++ ){
+            if( s[i]==e ) return i;
+        }
+        return -1;
+    }
+
+    void del(vector<int> &s,int e){
+        vector<int>::iterator it;
+        for( it=s.begin() ; it!=s.end() ; it++ ){
+            if( *it==e ){
+                s.erase(it);
+                break;
+            }
+        }
+    }
+
+    bool validateStackSequences(vector<int>& pushed, vector<int>& popped) {
+        if( pushed.size()==0 ) return true;
+        for( int i=0 ; i<popped.size()-1 ; i++ ){
+            //找到第i个出栈元素在pushed中的下标
+            int index=getIndex(pushed,popped[i]);
+            //找到第i+1个出栈元素在pushed中的下标
+            int index1=getIndex(pushed,popped[i+1]);
+            del(pushed,popped[i]);
+            //pushed[i]出栈之后，下一个出栈的元素只能是pushed[i-1]或者pushed[i+x]，保证不出界
+            if( (index1==index-1) || (index1>index) ) continue;
+            else return false;
+        }
+        return true;
+    }
+};
