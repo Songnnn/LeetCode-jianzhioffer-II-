@@ -1,0 +1,24 @@
+//JAVA
+//没过，想简单了
+class Solution {
+    //少考虑了一种情况，坐标满足小于K，但是机器人去不了
+    public int func(int x){
+        int sum=0;
+        while( x>0 ){
+            sum=sum+x%10;
+            x=x/10;
+        }
+        return sum;
+    }
+
+    public int movingCount(int m, int n, int k) {
+        //直接暴力
+        int counter=0;
+        for( int i=0 ; i<m ; i++ ){
+            for( int j=0 ; j<n ; j++ ){
+                if( func(i)+func(j)<=k ) counter++;
+            }
+        }
+        return counter;
+    }
+}
