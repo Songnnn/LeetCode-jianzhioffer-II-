@@ -1,0 +1,15 @@
+//JAVA
+class Solution {
+    public int findRepeatNumber(int[] nums) {
+        int[] A = new int[nums.length];
+       
+        for( int i=0 ; i<nums.length ; i++ ){
+        	A[nums[i]]++;
+        }
+
+        for( int i=0 ; i<nums.length ; i++ ){
+        	if( A[i]>1 ) return i;
+        }
+        return 0;
+    }
+}
