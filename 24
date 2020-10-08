@@ -1,0 +1,33 @@
+//JAVA
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode(int x) { val = x; }
+ * }
+ */
+class Solution {
+    public ListNode reverseList(ListNode head) {
+        //笨办法，先统计链表结点数
+        int[] nums=new int[5001];
+        int counter=0; //统计链表结点数
+        ListNode p=head;
+        for( int i=0 ; p!=null ; i++,counter++ ){
+            nums[i]=p.val;
+            p=p.next;
+        }
+        if( counter==0 ) return null;
+        ListNode q=new ListNode(nums[counter-1]);
+        q.next=null;
+        p=q;
+        for( int i=counter-2 ; i>=0 ; i-- ){
+            ListNode s=new ListNode(nums[i]);
+            s.next=null;
+            p.next=s;
+            p=p.next;
+        }
+        return q;
+        //还有更好的方法——双指针，见题解
+    }
+}
