@@ -1,0 +1,30 @@
+//C++
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    //原来的方法是我用了一个标记值，func函数的返回值类型是void，运行时间是8ms
+    //现在用了递归之后，代码更简洁了，但是运行时间，内存消耗都大了
+    bool func(TreeNode* &x,TreeNode* &y){
+        if( x!=NULL && y==NULL ) return false;
+        else if( x==NULL && y!=NULL ) return false;
+        else if( x==NULL && y==NULL ) return true;
+        else if( x->val!=y->val ) return false;
+        else{
+            return func(x->right,y->left)&&func(x->left,y->right);
+        }
+    }
+
+    bool isSymmetric(TreeNode* root) {
+        TreeNode *p=root;
+        if( !p ) return true;
+        return func(p->left,root->right)&&func(p->right,root->left);
+    }
+};
