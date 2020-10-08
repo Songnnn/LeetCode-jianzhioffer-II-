@@ -1,0 +1,46 @@
+//JAVA
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+class Solution {
+    //递归的方法耗时长，且消耗内存大
+    public int getIndex(int[]array,int ele){
+        for( int i=0 ; i<array.length ; i++ ){
+            if( ele==array[i] ) return i;
+        }
+        return 0;
+    }
+
+    public TreeNode buildTree(int[] preorder, int[] inorder) {
+        if( preorder.length==0 || inorder.length==0 ) return null;
+        TreeNode root=new TreeNode(preorder[0]);
+        //root.val=preorder[0]; //如果前序非空的话
+        root.left=null;
+        root.right=null;
+
+        int leftCount=getIndex(inorder,preorder[0]); //确定左子树的结点数
+        if( leftCount!=0 ){
+            int[] left_preorder=new int[leftCount]; //左子树的前序序列
+            System.arraycopy(preorder,1,left_preorder,0,leftCount);
+            int[] left_inorder=new int[leftCount];//左子树的中序序列
+            System.arraycopy(inorder,0,left_inorder,0,leftCount);
+            root.left=buildTree(left_preorder,left_inorder);
+        }
+        
+        int rightCount=inorder.length-1-leftCount; //确定右子树的结点数
+        if( rightCount!=0 ){
+            int[] right_preorder=new int[rightCount]; //右子树的前序序列
+            System.arraycopy(preorder,1+leftCount,right_preorder,0,rightCount);
+            int[] right_inorder=new int[rightCount];
+            System.arraycopy(inorder,1+leftCount,right_inorder,0,rightCount);
+            root.right=buildTree(right_preorder,right_inorder);
+        }
+        return root;
+    }
+}
