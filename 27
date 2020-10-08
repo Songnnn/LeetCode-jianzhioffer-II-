@@ -1,0 +1,26 @@
+//C++
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    void exchange(TreeNode* &x,TreeNode* &y){
+        TreeNode *p=x;
+        x=y;
+        y=p;
+        if( x ) exchange(x->left,x->right);
+        if( y ) exchange(y->left,y->right);
+    }
+
+    TreeNode* mirrorTree(TreeNode* root) {
+        if( !root ) return NULL;
+        exchange(root->left,root->right);
+        return root;
+    }
+};
