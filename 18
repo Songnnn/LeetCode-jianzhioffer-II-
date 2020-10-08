@@ -1,0 +1,26 @@
+//JAVA
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode(int x) { val = x; }
+ * }
+ */
+class Solution {
+    public ListNode deleteNode(ListNode head, int val) {
+        if( head.val==val ) return head.next;
+        ListNode p=head;
+        ListNode q=head.next;
+        while( q!=null ){
+            if( q.val==val ){
+                p.next=q.next;
+                q.next=null;
+                break;
+            }
+            p=p.next;
+            q=q.next;
+        }
+        return head;
+    }
+}
