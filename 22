@@ -1,0 +1,23 @@
+//JAVA
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode(int x) { val = x; }
+ * }
+ */
+class Solution {
+    public ListNode getKthFromEnd(ListNode head, int k) {
+        //笨办法，先统计链表结点数
+        int counter=0;
+        ListNode p=head;
+        while( p!=null ){
+            counter++;
+            p=p.next;
+        }
+        for( int i=counter-k ; i>0 ; i-- ) head=head.next;
+        return head;
+        //还有一种更好的方法，看官方题解
+    }
+}
