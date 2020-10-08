@@ -1,0 +1,37 @@
+//JAVA
+class Solution {
+    public int[] exchange(int[] nums) {
+        //采取类似快排的策略
+        //我这个是错的，记得用continue
+        /*
+        int tag=nums[0];
+        int i=0,j=nums.length;
+        while( j>=i ){
+            if( nums[j]%2==0 ){
+                while( nums[j]%2==0 ) j--;
+                //如果nums[j]是奇数的话，直接放到nums[i]上
+                nums[i]=nums[j];
+            }
+            if( nums[i]%2!=0 ){
+                while( nums[i]%2!=0 ) i++;
+                nums[j]=nums[i];
+            }
+        }
+        */
+        int[] tmp=new int[nums.length];
+        int i=0,j=nums.length-1;
+        for( int k=0 ; k<nums.length ; k++ ){
+            if( nums[k]%2==0 ){
+                //偶数
+                tmp[j]=nums[k];
+                j--;
+            }
+            else{
+                //奇数
+                tmp[i]=nums[k];
+                i++;
+            }
+        }
+        return tmp;
+    }
+}
