@@ -1,0 +1,12 @@
+//JAVA
+class Solution {
+    public String replaceSpace(String s) {
+        StringBuffer str = new StringBuffer("");
+        for( int i=0 ; i<s.length() ; i++ ){
+            if( s.charAt(i)==' ' ) str.append("%20");
+            else str.append(s.charAt(i));
+        }
+        String str1=str.toString();
+        return str1;
+    }
+}
