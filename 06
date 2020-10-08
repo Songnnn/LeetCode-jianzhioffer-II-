@@ -1,0 +1,39 @@
+//JAVA
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode(int x) { val = x; }
+ * }
+ */
+class Solution {
+    public int[] reversePrint(ListNode head) {
+        /*
+        //笨办法的运行时间和内存消耗反而更小！
+        //笨办法
+        int i=0;
+        int[] A=new int[10000];
+        while( head!=null ){
+             A[i++]=head.val;
+             head=head.next;
+        }
+        int[] B = new int[i];
+        for( int j=0 ; j<i ; j++ ) B[j] = A[i-1-j];
+        return B;
+        */
+
+        //用栈
+        Stack<Integer> s=new Stack<Integer>();
+        int count=0;
+        while( head!=null ){
+            s.push(head.val);
+            head=head.next;
+            count++;
+        }
+        
+        int[] A=new int[count];
+        for( int i=0 ; i<count ; i++ ) A[i]=s.pop();
+        return A;
+    }
+}
