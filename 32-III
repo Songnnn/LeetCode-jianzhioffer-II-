@@ -1,0 +1,43 @@
+//C++
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    vector<vector<int>> levelOrder(TreeNode* root) {
+        vector<vector<int> > res;
+        if( !root ) return res;
+        queue<TreeNode*> q;
+        q.push(root); 
+        int tag=1; //表示层数，单数层从左向右，双数层从右向左
+        while( !q.empty() ){
+            vector<int> temp;
+            int size=q.size();
+            for( int i=0 ; i<size ; i++ ){
+                TreeNode *p=q.front();
+                q.pop();
+                temp.push_back(p->val);
+                if( p->left ) q.push(p->left);
+                if( p->right ) q.push(p->right);
+            }
+            if( tag%2==0 ){
+                //双数层需要将temp中的数字反转
+                vector<int> temp1;
+                for( int i=temp.size()-1 ; i>=0 ; i-- ){
+                    temp1.push_back(temp[i]);
+                }
+                res.push_back(temp1);
+            }
+            else res.push_back(temp);
+            tag++;
+        }
+
+        return res;
+    }
+};
