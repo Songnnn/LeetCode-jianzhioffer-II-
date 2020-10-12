@@ -1,0 +1,35 @@
+//C++
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    void getPath(TreeNode *root,int sum1,int sum,
+    vector<vector<int> >& res,vector<int> s){
+        //sum1表示当前路径的和，sum是目标和，s是临时路径
+        if( root ){
+            s.push_back(root->val);
+            sum1=sum1+root->val;
+            if( sum==sum1 ){
+                //路径的最后一个节点必须是叶子结点
+                if( root->left==NULL && root->right==NULL ) res.push_back(s);
+            }
+            getPath(root->left,sum1,sum,res,s);
+            getPath(root->right,sum1,sum,res,s);
+        }
+    }
+
+    vector<vector<int>> pathSum(TreeNode* root, int sum) {
+        vector<vector<int> > res;
+        if( !root ) return res;
+        vector<int> s;
+        getPath(root,0,sum,res,s);
+        return res;
+    }
+};
