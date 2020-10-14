@@ -1,0 +1,46 @@
+//C++
+/*
+// Definition for a Node.
+class Node {
+public:
+    int val;
+    Node* next;
+    Node* random;
+    
+    Node(int _val) {
+        val = _val;
+        next = NULL;
+        random = NULL;
+    }
+};
+*/
+class Solution {
+public:
+    Node* copyRandomList(Node* head) {
+        Node* copyHead = new Node(0);
+        Node* p = copyHead;
+        //利用map存下相对位置
+        map<Node*, Node*> help;
+
+        Node* hd = head;
+        //先把next连接好
+        while( hd )
+        {
+            p->next = new Node(hd->val);
+            help[hd] = p->next;
+            hd = hd->next;
+            p = p->next;
+        }
+        hd = head;
+        p = copyHead->next;
+        //再把random连接好
+        while( hd )
+        {
+            p->random = help[hd->random];
+            hd = hd->next;
+            p = p->next;
+        }
+
+        return copyHead->next;
+    }
+};
