@@ -1,0 +1,62 @@
+/*
+// Definition for a Node.
+class Node {
+public:
+    int val;
+    Node* left;
+    Node* right;
+
+    Node() {}
+
+    Node(int _val) {
+        val = _val;
+        left = NULL;
+        right = NULL;
+    }
+
+    Node(int _val, Node* _left, Node* _right) {
+        val = _val;
+        left = _left;
+        right = _right;
+    }
+};
+*/
+class Solution {
+public:
+    Node* findLeftest(Node *root) {
+        while (root->left) root = root->left;
+        return root;
+    }
+
+    //这里的head需要用引用吗？
+    //需要！否则答案不正确
+    //这里要特别小心，head一定要用引用类型
+    //如果不用的话，递归回来的时候head还是原来的值，并没有改变
+    void traverse(Node* root, Node* &head) {
+        if (root) {
+            if (root->left) traverse(root->left,head);
+            if (head != root) {
+                //root一直递归最后一定会等于head，但是此时不能有动作
+                root->left = head;
+                head->right = root;
+                head = head->right;
+            }
+            if (root->right) traverse(root->right,head);
+        }
+    }
+
+    Node* treeToDoublyList(Node* root) {
+        //如果是空树的话
+        if (!root) return NULL;
+
+        //找到中序遍历的第一个
+        Node *head = findLeftest(root);
+        Node *head1 = head;
+        //边进行中序遍历，边构建双向链表
+        traverse(root, head);
+        while (head->right) head = head->right;
+        head->right = head1;
+        head1->left = head;
+        return head1;
+    }
+};
