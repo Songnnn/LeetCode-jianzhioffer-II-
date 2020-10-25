@@ -1,0 +1,39 @@
+
+class Solution {
+public:
+    //题目假设必定有多数元素
+    int getMost(vector<int> nums) {
+        int counter = 1; 
+        int e = nums[0];
+        for (int i = 1; i < nums.size(); i++) {
+            if (nums[i] == e) counter++; //该元素的个数再加一
+            else counter--; //相当于除掉两个不同的元素
+
+            if ((i < nums.size() - 2) && (counter == 0)) {
+                //还剩一个以上
+                i++;
+                e = nums[i];
+                counter = 1;
+            }
+            else if (i == nums.size() - 2) {
+                //如果size是单数，则还剩一个
+                if (counter > 1) return e;
+                else return nums[nums.size() - 1];
+            }
+            else if (i == nums.size() - 1) {
+                //size是双数
+                return nums[i];
+            }
+        }
+        //实际上永远不会到这里
+        return nums[nums.size() - 1];
+    }
+
+    int majorityElement(vector<int>& nums) {
+        //利用结论：在原序列中去除两个不同的元素后，那么在原序列中的多数元素在新序列中还是多数元素
+        //做法：每次取两个不同元素，最后若无剩余则没有多数元素
+        //若有剩余，则再确认一下它是否真的是多数元素
+        if (nums.size() == 1) return nums[0];
+        return getMost(nums);
+    }
+};
