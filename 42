@@ -1,0 +1,20 @@
+/*
+看题解的第一个
+这里有一个非常巧妙的点，dp[i]不是指nums[0]到nums[i]的连续子数组最大和，如果是这样做的话，dp[i]和dp[i+1]之间就没有连续性了
+题解的做法是dp[i]代表以元素nums[i]为结尾（即一定要有nums[i]这个元素在）的连续子数组最大和,这样就能写出递推式。
+*/
+class Solution {
+public:
+    int maxSubArray(vector<int>& nums) {
+        int max=nums[0];
+        int former=max; //指dp[i-1]
+        int later=max; //指dp[i]
+        for (int i = 1; i < nums.size(); i++) {
+            if (former <= 0) later = nums[i];
+            else later = former + nums[i];
+            max = max > later ? max : later;
+            former = later;
+        }
+        return max;
+    }
+};
