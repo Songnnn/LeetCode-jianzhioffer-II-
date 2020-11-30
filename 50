@@ -1,0 +1,18 @@
+
+class Solution {
+public:
+    char firstUniqChar(string s) {
+        //a的asc码是97，这是第0个字母
+        int letter[26] = { 0 };
+        for (int i = 0; i < s.length(); i++) {
+            int index = (int)s[i] - 97;
+            letter[index]++;
+        }
+        //找第一个只出现一次的字母
+        for (int i = 0; i < s.length(); i++) {
+            int index = (int)s[i] - 97;
+            if (letter[index] == 1) return s[i];
+        }
+        return ' ';
+    }
+};
