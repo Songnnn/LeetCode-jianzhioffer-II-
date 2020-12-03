@@ -1,0 +1,18 @@
+
+class Solution {
+public:
+    int search(vector<int>& nums, int target) {
+        //可以用暴力，但是太low了
+        int cnt = 0;
+        int i;
+        for (i = 0; i < nums.size(); i++) {
+            //第一次遇到target
+            if (nums[i] == target) cnt++;
+        }
+        for (int j = i; j < nums.size(); j++) {
+            if (nums[j] > target) break;
+            cnt++;
+        }
+        return cnt;
+    }
+};
