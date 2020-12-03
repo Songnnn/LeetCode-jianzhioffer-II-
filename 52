@@ -1,0 +1,41 @@
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode(int x) : val(x), next(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    int getNumbers(ListNode* head) {
+        int cnt = 0;
+        while (head) {
+            cnt++;
+            head = head->next;
+        }
+        return cnt;
+    }
+
+    ListNode* getIntersectionNode(ListNode* headA, ListNode* headB) {
+        //计算链表的节点数，利用节点数之差来做
+        int numberA = getNumbers(headA);
+        int numberB = getNumbers(headB);
+
+        if (numberA > numberB) {
+            int steps = numberA - numberB;
+            while (steps-- > 0) headA = headA->next;
+        }
+        else if(numberB > numberA) {
+            int steps = numberB - numberA;
+            while (steps-- > 0) headB = headB->next;
+        }
+
+        while (1) {
+            if (headA == headB) return headA;
+            headA = headA->next;
+            headB = headB->next;
+        }
+        return NULL;
+    }
+};
