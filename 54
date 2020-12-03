@@ -1,0 +1,27 @@
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Solution {
+public:
+
+    void midTraverse(vector<int> &s,TreeNode* root) {
+        if (root) {
+            midTraverse(s, root->left);
+            s.push_back(root->val);
+            midTraverse(s, root->right);
+        }
+    }
+
+    int kthLargest(TreeNode* root, int k) {
+        //先中序遍历排序，排出一个递增的序列，然后找倒数第k个数
+        vector<int> s;
+        midTraverse(s,root);
+        return s[s.size() - k];
+    }
+};
