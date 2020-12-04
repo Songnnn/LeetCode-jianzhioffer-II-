@@ -2,6 +2,7 @@ class Solution {
 public:
     vector<int> singleNumbers(vector<int>& nums) {
         //利用map来做
+        //题解使用异或来做，很巧妙，A ^ A ^ C ^ C ^ D ^ E = D ^ E，再把D，E分开
         vector<int> res;
         map<int, int> m;
         for (int i = 0; i < nums.size(); i++) {
