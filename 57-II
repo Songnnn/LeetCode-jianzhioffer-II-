@@ -1,0 +1,28 @@
+class Solution {
+public:
+    //我用的是暴力求解法，滑动窗口法要好很多
+    vector<int> func(int i, int& tag,int target) {
+        int sum = 0;
+        vector<int> res;
+        for (int j = i; j < target; j++) {
+            sum += j;
+            res.push_back(j);
+            if (sum == target) break;
+            if (sum > target) {
+                tag = 0;
+                break;
+            }
+        }
+        return res;
+    }
+
+    vector<vector<int>> findContinuousSequence(int target) {
+        vector<vector<int>> res;
+        for (int i = 1; i < target / 2 + 1; i++) {
+            int tag = 1;
+            vector<int> v = func(i, tag, target);
+            if (tag == 1) res.push_back(v);
+        }
+        return res;
+    }
+};
