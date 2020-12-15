@@ -1,0 +1,25 @@
+class Solution {
+public:
+    int getMaxIndex(vector<int> nums, int i, int j) {
+        int maxIndex = i;
+        for (int k = i; k < j; k++) {
+            if (nums[k] > nums[maxIndex]) maxIndex = k;
+        }
+        return maxIndex;
+    }
+
+    vector<int> maxSlidingWindow(vector<int>& nums, int k) {
+        vector<int> res;
+        if (k == 1 || nums.size() == 0) return nums;
+        int maxIndex = getMaxIndex(nums, 0, k);
+        res.push_back(nums[maxIndex]);
+        for (int i = 1; i <= nums.size() - k; i++) {
+            if (maxIndex == i - 1) maxIndex = getMaxIndex(nums, i, k + i); //如果滑动窗口最左边的左边一位刚好是之前的最大值
+            else {
+                if (nums[i + k - 1] > nums[maxIndex]) maxIndex = i + k - 1;
+            }
+            res.push_back(nums[maxIndex]);
+        }
+        return res;
+    }
+};
