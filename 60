@@ -1,0 +1,28 @@
+class Solution {
+public:
+    //这个递归方法在n大于10的时候会超时
+    //n个骰子之和为sum，返回可能的种类数
+    int getP(int sum, int n) {
+        if (sum < 1 || sum < n || (sum > 6 && n == 1)) return 0;
+        if (n == 1) return 1;
+        return getP(sum - 1, n - 1) + getP(sum - 2, n - 1) + getP(sum - 3, n - 1) + getP(sum - 4, n - 1) +
+            getP(sum - 5, n - 1) + getP(sum - 6, n - 1);
+    }
+
+    vector<double> dicesProbability(int n) {
+        vector<double> res;
+        vector<double> vd;
+        double sum = 0;
+        for (int i = n; i <= 6 * n; i++) {
+            int p = getP(i,n);
+            res.push_back(p);
+            sum += p;
+        }
+        
+        for (int i = 0; i < res.size(); i++) {
+            double p = res[i] / sum;
+            vd.push_back(p);
+        }
+        return vd;
+    }
+};
