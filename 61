@@ -1,0 +1,39 @@
+class Solution {
+public:
+    //我的是笨办法
+    //好方法是：先排序，再数0的个数，再判断有没有重复，最后判断除了0以外 最小最大之差是否小于等于 4
+    bool find(int x, vector<int> nums, int tag[5]) {
+        for (int i = 0; i < 5; i++) {
+            if (nums[i] == x) {
+                tag[i] = 1;
+                return true;
+            }
+        }
+        for (int i = 0; i < 5; i++) {
+            if (nums[i] == 0 && tag[i] == 0) {
+                tag[i] = 1;
+                return true;
+            }
+        } 
+        return false;
+    }
+
+    bool isStraight(vector<int>& nums) {
+        int min = 13;
+        int minIndex = 0;
+        int tag[5] = { 0 };
+        for (int i = 0; i < 5; i++) {
+            if (nums[i] < min && nums[i] != 0) {
+                min = nums[i];
+                minIndex = i;
+            }
+        }
+        
+        tag[minIndex] = 1;
+        min++;
+        for (int i = 0; i < 4; i++,min++) {
+            if (!find(min, nums, tag)) return false;   
+        }
+        return true;
+    }
+};
