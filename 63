@@ -1,0 +1,46 @@
+//解法1，二分法，但是过不了测试，栈溢出了，递归就容易出这种问题
+//最大利润为max(前部分的最大利润，后部分的最大利润，后部分最大值-前部分最小值)
+class Solution {
+public:
+    int Max(int a, int b, int c) {
+        int x = a > b ? a : b;
+        return x > c ? x : c;
+    }
+
+    int getMax(int s, int e, vector<int> prices) {
+        int max = prices[s];
+        for (int i = s; i <= e; i++) {
+            if (prices[i] > max) max = prices[i];
+        }
+        return max;
+    }
+
+    int getMin(int s, int e, vector<int> prices) {
+        int min = prices[s];
+        for (int i = s; i <= e; i++) {
+            if (prices[i] < min) min = prices[i];
+        }
+        return min;
+    }
+
+    int getMaxV(int start, int end, vector<int> prices) {
+        if (end == start) return 0;
+        else if (end == start + 1) {
+            int res = prices[end] - prices[start];
+            if (res > 0) return res;
+            else return 0;
+        }
+        else {
+            return Max(getMaxV(start, (start + end) / 2, prices),
+                getMaxV((start + end) / 2 + 1, end, prices),
+                getMax((start + end) / 2 + 1, end, prices) - getMin(start, (start + end) / 2, prices)
+            );
+        }
+    }
+
+    int maxProfit(vector<int>& prices) {
+        return getMaxV(0, prices.size()-1, prices);
+    }
+};
+
+//解法2，动态规划法
