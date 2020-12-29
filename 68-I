@@ -1,0 +1,27 @@
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
+        if ((p->val >= root->val && q->val <= root->val) || (p->val <= root->val && q->val >= root->val)) {
+            //当p和q分别位于root的左右两边时，root就是最近公共祖先（包括祖先是自己的情况）
+            return root;
+        }
+        else if (p->val < root->val && q->val < root->val) {
+            //当p和q都位于root的左边时
+            return lowestCommonAncestor(root->left, p, q);
+        }
+        else if (p->val > root->val && q->val > root->val) {
+            //当p和q都位于root的右边时
+            return lowestCommonAncestor(root->right, p, q);
+        }
+        return NULL;
+    }
+};
