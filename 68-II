@@ -1,0 +1,63 @@
+//第29个用例超时了
+ class Solution {
+ public:
+     //利用中序遍历来做
+     void minTra(vector<int>& tra, TreeNode* root) {
+         if (root) {
+             minTra(tra, root->left);
+             tra.push_back(root->val);
+             minTra(tra, root->right);
+         }
+     }
+
+     int getIndex(int x, vector<int> tra) {
+         for (int i = 0; i < tra.size(); i++) {
+             if (x == tra[i]) return i;
+         }
+         return -1;
+     }
+
+     TreeNode* mylowest(TreeNode* root, vector<int> tra, int pi, int qi) {
+         int rooti = getIndex(root->val, tra);
+         if ((pi >= rooti && qi <= rooti) || (pi <= rooti && qi >= rooti)) return root;
+         else if (pi < rooti && qi < rooti)return mylowest(root->left, tra, pi, qi);
+         else if (pi > rooti && qi > rooti)return mylowest(root->right, tra, pi, qi);
+         return NULL;
+     }
+
+     TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
+         vector<int> tra; //存放中序遍历结果
+         minTra(tra, root);
+         int pi = getIndex(p->val, tra);
+         int qi = getIndex(q->val, tra);
+         return mylowest(root, tra, pi, qi);
+     }
+ };
+ 
+ //大神的解答
+ class Solution {
+ public:
+     TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
+         if (root == NULL) {
+             return NULL;
+         }
+         if (root == p || root == q) {
+             return root;
+         }
+         TreeNode* left = lowestCommonAncestor(root->left, p, q);
+         TreeNode* right = lowestCommonAncestor(root->right, p, q);
+         if (left != NULL && right != NULL) {
+             // p q 一个在左，一个在右
+             return root;
+         }
+         if (left != NULL) {
+             // p q 都在左子树
+             return left;
+         }
+         if (right != NULL) {
+             // p q 都在右子树
+             return right;
+         }
+         return NULL;
+     }
+ };
